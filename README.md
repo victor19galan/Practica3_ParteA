@@ -1,68 +1,52 @@
-# Práctica 3 – Parte A
+# Práctica 3A – Servidor Web WiFi (Modo Station) en ESP32
 
-## Servidor Web con ESP32-S3
+**Asignatura**: Microprocesadores y Sistemas Digitales  
+**Universitat Politècnica de Catalunya (UPC)**  
+**Curso académico**: 2025-2026
 
-### Descripción
+Repositorio oficial de la **Parte A** de la Práctica 3: **Generación de un servidor web con ESP32 en modo STA**.
 
-En esta práctica se implementa un **servidor web utilizando una ESP32-S3**.
-La placa se conecta a una red **WiFi en modo estación (STA)** y crea un **servidor HTTP en el puerto 80**.
-Cuando un usuario accede a la dirección IP de la ESP32 desde un navegador, la placa envía una **página web con HTML y JavaScript**.
+## Objetivo de la Parte A
 
-La página contiene una imagen de una bombilla y dos botones que permiten **encenderla o apagarla** mediante JavaScript, cambiando la imagen mostrada.
+Crear un servidor web accesible desde cualquier navegador utilizando la ESP32 conectada a una red WiFi existente (modo Station).  
+Se demuestra el uso de las librerías `WiFi.h` y `WebServer.h` para servir contenido HTML dinámico, mostrando la IP asignada por el router y permitiendo el acceso remoto sin necesidad de montaje hardware adicional.
 
----
+Esta parte es la base para extender el proyecto al modo Access Point (AP) y a la comunicación Bluetooth Classic (Parte B).
 
-### Funcionamiento
+## Características implementadas
 
-1. La ESP32 se conecta a la red WiFi utilizando el **SSID y contraseña configurados en el código**.
-2. Una vez conectada, la placa muestra su **dirección IP en el monitor serie**.
-3. Se inicia un **servidor web** en el puerto 80.
-4. Cuando un navegador accede a la dirección `/`, la ESP32 envía la página HTML.
-5. El usuario puede interactuar con la página mediante botones que cambian la imagen de la bombilla.
+- Conexión WiFi en **modo STA** (Station)
+- Servidor HTTP en puerto 80
+- Página web con HTML + CSS (mejorada y separada en fichero externo)
+- Visualización de la IP en Monitor Serie
+- Acceso desde cualquier dispositivo en la misma red WiFi
+- Código limpio y comentado con separación de HTML (según requisito de la práctica)
 
----
+## Requisitos
 
-### Salida por el monitor serie
+### Hardware
+- Placa ESP32 (cualquier variante)
+- Cable USB  
+*(No se requiere ningún componente externo)*
 
-Al ejecutar el programa se puede observar algo similar a lo siguiente:
+### Software
+- **Arduino IDE** 2.x
+- ESP32 board package instalado
+- Monitor Serie a **115200 baudios**
+- Navegador web (Chrome, Firefox, Safari…)
+- Editor Markdown (para generar el fichero HTML mejorado)
 
-```
-Conectando a WiFi...
-.....
-WiFi conectado
-IP: 192.168.1.45
-Servidor HTTP iniciado
-```
+## Código fuente (`src/practica3A_webserver.ino`)
 
----
+```cpp
+#include <WiFi.h>
+#include <WebServer.h>
 
-### Cómo ejecutar el proyecto
+// ================== CONFIGURACIÓN WIFI ==================
+const char* ssid = "TU_SSID";          // ← CAMBIA ESTO
+const char* password = "TU_PASSWORD";  // ← CAMBIA ESTO
 
-1. Conectar la **ESP32-S3** al ordenador mediante USB.
-2. Abrir el proyecto en **PlatformIO**.
-3. Configurar en el código el **SSID y la contraseña de la red WiFi**.
-4. Compilar y subir el programa a la placa.
-5. Abrir el **Monitor Serie** a 115200 baudios.
-6. Copiar la **dirección IP que aparece**.
-7. Abrir esa dirección en un **navegador web**.
-
-Ejemplo:
-
-```
-http://192.168.1.45
-```
-
----
-
-### Tecnologías utilizadas
-
-* ESP32-S3
-* Arduino Framework
-* WiFi
-* WebServer (HTTP)
-* HTML
-* JavaScript
-* PlatformIO
+WebServer server(80);
 
 ---
 
